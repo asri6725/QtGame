@@ -1,62 +1,59 @@
 #include "dialog.h"
 #include "ui_dialog.h"
-#include <QPainter>
+
 #include <iostream>
+#include <QtCore>
+
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Dialog),
-    bg_x(0)
-
+    ui(new Ui::Dialog)
 {
+    this->readfile();
+    this->setValues();
     ui->setupUi(this);
-    // connect it with a timer
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(myfunction()));
+    this->resize(400,200);
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
     timer->start(100);
+
     this->update();
 }
 
-void Dialog::paintEvent(QPaintEvent *event){
-    QPainter painter(this);
-
-    // draw background
-
-    QImage image("C:/Users/Abhi/Desktop/bg.png");                   //load image
-    image = image.scaledToHeight(500, Qt::FastTransformation);      // set constant height
-
-    int height = image.height();                                    // need frame of reference to draw stickman
-    int width = image.width();                                      // ^same and to update frames
+void Dialog::readfile()
+{
+    QString loc = "C:/Users/Abhi/Desktop/config.json";
+    read ob;
+    ob.setloc(loc);
+    this->json = ob.readjson();
 
 
-    QRectF target(10.0, 20.0, 900, height);
-    QRectF source(0.0+bg_x, 0.0, 450, height);
-
-    painter.drawImage(target, image, source);
-    std::cout << bg_x <<std::endl;
-
-    // draw stickman
-
-    //make a pen
-
-    QPen linepen;
-    linepen.setWidth(4);
-
-    // draw
-    int man_x = 30, man_y = height/2;
-    painter.setPen(linepen);
-    painter.drawEllipse(0+man_x,0+man_y,30,30);
-    painter.drawLine(15+man_x,30+man_y,15+man_x,100+man_y);
-    painter.drawArc(0+man_x,100+man_y,30, 40, 30*16,120*16);
-    painter.drawArc(0+man_x,50+man_y,30, 40, 30*16,120*16);
 }
+
+void Dialog::setValues()
+{
+    bg.setImg(this->json["background"].toString());
+    bg.set_x_speed(this->json["velocity"].toInt());
+    man.setSize(this->json["size"].toString());
+    man.set_x_pos(this->json["xposition"].toInt());
+
+}
+
 
 Dialog::~Dialog()
 {
     delete ui;
 }
 
-void Dialog::myfunction()
+void Dialog::nextFrame()
 {
-    bg_x = bg_x+1;
+    bg.move();
     this->update();
+}
+
+void Dialog::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    bg.renderBackImg(painter, this->height());
+    man.renderStickman(painter);
 }
