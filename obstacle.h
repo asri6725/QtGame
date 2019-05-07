@@ -14,7 +14,7 @@ public:
     ~obstacle();
 
     void render(QPainter &painter);
-
+    Position *pos;
 private:
     std::string type;
 };

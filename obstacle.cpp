@@ -20,6 +20,9 @@ void obstacle::render(QPainter &painter)
 {
 
     QRect* rect = new QRect(pos->getX(), pos->getY(), pos->getWidth(), pos->getHeight());
+    QBrush brush;
+    brush.color(this->type);
+    painter.setBrush(brush);
 
     painter.drawRect(*rect);
 }

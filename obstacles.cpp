@@ -3,11 +3,12 @@
 
 obstacles::obstacles(int number, int speed, moveplayer *p)
 {
+    std::string types[] = {"red", "blue", "green"};
     this->speed = speed; this->number = number; this->p = p;
-    obstacless.push_back(new obstacle(RES_X, 70, 50, 70));
+    obstacless.push_back(new obstacle(RES_X, 70, 50, 70, types[0]));
     for(int i=1; i<number; i++){
         int x = obstacless[i-1]->pos->getX(), y = obstacless[i-1]->pos->getY(), w = obstacless[i-1]->pos->getWidth(), h = obstacless[i-1]->pos->getHeight();
-        obstacless.push_back(new obstacle(x+300, y, w, h));
+        obstacless.push_back(new obstacle(x+300, y, w, h, types[i%3]));
     }
 }
 
@@ -78,7 +79,7 @@ void obstacles::helper()
     obstacle* check = obstacless[0];
     if(check->pos->getX()+check->pos->getWidth() < 0){
         obstacless.erase(obstacless.begin());
-        obstacless.push_back(new obstacle(RES_X,500, 50, 70));
+        obstacless.push_back(new obstacle(RES_X,500, 50, 70, "red"));
     }
 }
 
