@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-03-31T14:24:41
+# Project created by QtCreator 2019-03-16T14:24:54
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = finalbuild
+TARGET = Base1E
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,17 +26,37 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         dialog.cpp \
-    draw_ob.cpp \
-    back_img.cpp \
-    stickman.cpp \
-    read.cpp
+    config.cpp \
+    player.cpp \
+    position.cpp \
+    worldobject.cpp \
+    background.cpp \
+    eyecandy.cpp \
+    worldobjectfactory.cpp \
+    worldmanager.cpp \
+    moveplayer.cpp \
+    obstacles.cpp \
+    obstacle.cpp
 
 HEADERS += \
         dialog.h \
-    back_img.h \
-    stickman.h \
-    draw_ob.h \
-    read.h
+    config.h \
+    player.h \
+    position.h \
+    worldobject.h \
+    background.h \
+    eyecandy.h \
+    worldobjectfactory.h \
+    worldmanager.h \
+    define.h \
+    moveplayer.h \
+    obstacles.h \
+    obstacle.h
 
 FORMS += \
         dialog.ui
+
+COPIES += candy
+
+candy.files += $$files(resources)
+candy.path = $$OUT_PWD

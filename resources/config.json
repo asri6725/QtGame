@@ -1,0 +1,19 @@
+{
+  "size": "normal",
+  "initX": 0,
+  "initY": 0,
+  "velocity": 2,
+  "backgroundTexture": "D:/info3220 assignment2/Base1E/resources/textures/background.png",
+  "playerTexture": "D:/info3220 assignment2/Base1E/resources/textures/player.png",
+  "pauseTexture": "D:/info3220 assignment2/Base1E/resources/textures/pause.png",
+  "airCandyTextures": [
+      "D:/info3220 assignment2/Base1E/resources/textures/airCandy0.png"
+  ],
+  "groundCandyTextures": [
+      "D:/info3220 assignment2/Base1E/resources/textures/groundCandy0.png",
+      "D:/info3220 assignment2/Base1E/resources/textures/groundCandy1.png",
+      "D:/info3220 assignment2/Base1E/resources/textures/groundCandy2.png"
+  ],
+  "airCandyPosition": 540,
+  "groundCandyPosition": 280
+}

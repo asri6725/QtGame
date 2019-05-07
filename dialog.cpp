@@ -1,59 +1,89 @@
+#include <QDir>
+#include <QDebug>
 #include "dialog.h"
 #include "ui_dialog.h"
-
+#include "define.h"
 #include <iostream>
-#include <QtCore>
 
 
-Dialog::Dialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Dialog)
-{
-    this->readfile();
-    this->setValues();
+// Constructor
+Dialog::Dialog(QWidget *parent): QDialog(parent), ui(new Ui::Dialog){
+
+    // Setup window, FPS, path, RNG
     ui->setupUi(this);
-    this->resize(400,200);
-    QTimer *timer = new QTimer(this);
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+    this->setWindowState(Qt::WindowFullScreen);
+    timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(100);
+    timer->start(FRAME_TIME);
+    std::srand(std::time(nullptr));
 
-    this->update();
+    // Read config file
+    config = new Config("D:/info3220 assignment2/Base1E/resources/config.json");
+    if(!config->isValid()){
+        qCritical() << config->getErrorMsg().c_str();
+        QMetaObject::invokeMethod(this, "close", Qt::QueuedConnection);
+    }
+
+    // Init world manager and player
+    else{
+        player = new Player(config);
+        worldManager = new WorldManager(config);
+        this->playerfunc = new moveplayer(player);
+        this->ob = new obstacles(6, -3, playerfunc);
+        //this->ob = nullptr;
+        if(this->ob == nullptr)
+            this->stage2 = false;
+        else
+            this->stage2 = true;
+    }
+
 }
 
-void Dialog::readfile()
-{
-    QString loc = "C:/Users/Abhi/Desktop/config.json";
-    read ob;
-    ob.setloc(loc);
-    this->json = ob.readjson();
-
-
-}
-
-void Dialog::setValues()
-{
-    bg.setImg(this->json["background"].toString());
-    bg.set_x_speed(this->json["velocity"].toInt());
-    man.setSize(this->json["size"].toString());
-    man.set_x_pos(this->json["xposition"].toInt());
-
-}
-
-
-Dialog::~Dialog()
-{
+// Destructor
+Dialog::~Dialog(){
     delete ui;
+    delete timer;
+    if(config->isValid()){
+        delete player;
+        delete worldManager;
+    }
+    if(stage2==true){
+        delete this->ob;
+        delete this->playerfunc;
+        delete player;
+        delete worldManager;
+    }
+    delete config;
 }
 
-void Dialog::nextFrame()
-{
-    bg.move();
-    this->update();
+// Frame update
+void Dialog::nextFrame(){
+    update();
 }
-
-void Dialog::paintEvent(QPaintEvent *event)
-{
+void Dialog::paintEvent(QPaintEvent *event){
     QPainter painter(this);
-    bg.renderBackImg(painter, this->height());
-    man.renderStickman(painter);
+    worldManager->update(painter);
+    if(stage2 == false)
+        player->render(painter);
+    else{
+    playerfunc->render(painter);
+    ob->render(painter);
+    worldManager->setvelocity(-(ob->getvelocity()));
+
+    }
+}
+
+// Respond to Key Press
+void Dialog::keyPressEvent(QKeyEvent *e){
+    // Pause
+    if(e->key() == Qt::Key_Tab)
+        worldManager->togglePause();
+    // Quit
+    if(e->key() == Qt::Key_Escape)
+        this->reject();
+    //jump
+    if(stage2 == true)
+    if(e->key()==Qt::Key_Space)
+        this->playerfunc->setyvelocity(30);
 }

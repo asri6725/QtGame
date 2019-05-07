@@ -2,38 +2,49 @@
 #define DIALOG_H
 
 #include <QDialog>
-
-#include <QPainter>
-#include <stickman.h>
-#include <back_img.h>
 #include <QTimer>
-#include <read.h>
+#include <QKeyEvent>
+#include "config.h"
+#include "player.h"
+#include "worldmanager.h"
+#include "moveplayer.h"
+#include "obstacles.h"
 
 namespace Ui {
-class Dialog;
+    class Dialog;
 }
 
-class Dialog : public QDialog
-{
-    Q_OBJECT
+class Dialog : public QDialog {
+Q_OBJECT
 
 public:
+
+    // Constructor + Destructor
     explicit Dialog(QWidget *parent = 0);
-    void readfile();
-    void setValues();
     ~Dialog();
 
-public slots:
-    void nextFrame();
+private:
 
-protected:
+    // Process events
     void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *e);
 
 private:
-    Ui::Dialog *ui;
-    back_img bg;
-    stickman man;
-    QVariantMap json;
+
+    // Members
+    Ui::Dialog* ui;
+    QTimer* timer;
+    Config* config;
+    Player* player;
+    WorldManager* worldManager;
+    moveplayer* playerfunc;
+    obstacles *ob;
+    bool stage2;
+public slots:
+
+    // Process next frame
+    void nextFrame();
+
 };
 
 #endif // DIALOG_H
