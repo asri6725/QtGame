@@ -31,6 +31,14 @@ public:
     int getAirPos();
     int getGroundPos();
 
+    // obstacles
+    std::string getRed();
+    std::string getGreen();
+    std::string getBlue();
+    std::vector<std::string> getObstacleSequence();
+    int getObstacleSpacing();
+    std::vector<int> getObstacleYpos();
+
 private:
 
     // Attributes
@@ -47,6 +55,13 @@ private:
     std::vector<std::string> groundCandyTextures;
     int groundPos;
     int airPos;
+    //obstacles
+    std::string red;
+    std::string blue;
+    std::string green;
+    std::vector<std::string> obstacleSequence;
+    int obstacleSpacing;
+    std::vector <int> obstacleYpos;
 
     // Helper function
     bool fileExists(std::string path);

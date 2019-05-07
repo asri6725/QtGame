@@ -30,7 +30,7 @@ Dialog::Dialog(QWidget *parent): QDialog(parent), ui(new Ui::Dialog){
         player = new Player(config);
         worldManager = new WorldManager(config);
         this->playerfunc = new moveplayer(player);
-        this->ob = new obstacles(6, -3, playerfunc);
+        this->ob = new obstacles(config, playerfunc);
         //this->ob = nullptr;
         if(this->ob == nullptr)
             this->stage2 = false;

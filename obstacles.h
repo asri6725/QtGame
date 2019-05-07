@@ -2,12 +2,13 @@
 #define OBSTACLES_H
 #include "obstacle.h"
 #include "moveplayer.h"
+#include "config.h"
 #include <QPainter>
 
 class obstacles
 {
 public:
-    obstacles(int number, int speed, moveplayer *p);
+    obstacles(Config* config, moveplayer *p);
     ~obstacles();
 
     void render(QPainter &painter);
@@ -23,7 +24,7 @@ public:
     int getvelocity();
 
 private:
-    int number, speed;
+    int number, speed, spacing;
     std::vector<obstacle *> obstacless;
     moveplayer *p;
 };

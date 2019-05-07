@@ -5,18 +5,18 @@
 #include <position.h>
 //#include <worldobject.h>
 #include <define.h>
-
+#include <QPixmap>
 class obstacle
 {
 public:
-    obstacle(Position *pos, std::string type);
-    obstacle(int x, int y, int w, int h, std::string type);
+    obstacle(Position *pos, QPixmap *sprite);
+    obstacle(int x, int y, int w, int h, QPixmap *sprite);
     ~obstacle();
 
     void render(QPainter &painter);
     Position *pos;
 private:
-    std::string type;
+    QPixmap* sprite;
 };
 
 #endif // OBSTACLE_H

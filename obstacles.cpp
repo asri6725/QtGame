@@ -1,14 +1,28 @@
 #include "obstacles.h"
 #include <iostream>
 
-obstacles::obstacles(int number, int speed, moveplayer *p)
+obstacles::obstacles(Config *config, moveplayer *p)
 {
-    std::string types[] = {"red", "blue", "green"};
-    this->speed = speed; this->number = number; this->p = p;
-    obstacless.push_back(new obstacle(RES_X, 70, 50, 70, types[0]));
-    for(int i=1; i<number; i++){
-        int x = obstacless[i-1]->pos->getX(), y = obstacless[i-1]->pos->getY(), w = obstacless[i-1]->pos->getWidth(), h = obstacless[i-1]->pos->getHeight();
-        obstacless.push_back(new obstacle(x+300, y, w, h, types[i%3]));
+    this->p = p;
+    this->speed = config->getVelocity();
+    this->spacing = config->getObstacleSpacing();
+    std::vector <std::string> seq = config->getObstacleSequence();
+  //  std::vector <int> obsY = config->getObstacleYpos();
+    for(unsigned int i=0; i<seq.size(); i++){
+        QPixmap* sprite = nullptr;
+        if(seq[i]=="red")
+            sprite = new QPixmap(config->getRed().c_str());
+        else if(seq[i] == "blue")
+            sprite = new QPixmap(config->getBlue().c_str());
+        else
+            sprite = new QPixmap(config->getGreen().c_str());
+        if(i==0)
+            obstacless.push_back(new obstacle(RES_X, 100, 70, 50, sprite));
+        else{
+            Position *p = obstacless[i-1]->pos;
+            p->moveX(spacing);
+            obstacless.push_back(new obstacle(p, sprite));
+        }
     }
 }
 
@@ -78,8 +92,13 @@ void obstacles::helper()
 {
     obstacle* check = obstacless[0];
     if(check->pos->getX()+check->pos->getWidth() < 0){
+        Position *p2 = obstacless[obstacless.size()-1]->pos;
+        if(p2->getX()+spacing > RES_X)
+            check->pos->moveX(p2->getX()+spacing);
+        else
+            check->pos->moveX(p2->getX()+spacing+RES_X);
         obstacless.erase(obstacless.begin());
-        obstacless.push_back(new obstacle(RES_X,500, 50, 70, "red"));
+        obstacless.push_back(check);
     }
 }
 
