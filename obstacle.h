@@ -7,12 +7,12 @@
 //#include <worldobject.h>
 #include <define.h>
 #include <QPixmap>
-class obstacle
+class Obstacle
 {
 public:
-    obstacle(Position *pos, QPixmap *sprite, QString type);                   // use this constructor to just readd an existing obstacle to the end of a list after changing it's xposition
-    obstacle(int x, int y, int w, int h, QPixmap *sprite, QString type);      // i use this to create a new obstacle for the first time
-    ~obstacle();
+    Obstacle(Position *pos, QPixmap *sprite, QString type);                   // use this constructor to just readd an existing obstacle to the end of a list after changing it's xposition
+    Obstacle(int x, int y, int w, int h, QPixmap *sprite, QString type);      // i use this to create a new obstacle for the first time
+    ~Obstacle();
     //obstacle tpe
     QString obsType();
 

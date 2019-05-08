@@ -38,10 +38,10 @@ private:
     Config* config;
     Player* player;
     WorldManager* worldManager;
-    moveplayer* playerfunc;
-    obstacles *ob;
+    MovePlayer* playerfunc;
+    Obstacles *ob;
     bool stage2;
-    collision *collide;
+    Collision *collide;
 public slots:
 
     // Process next frame

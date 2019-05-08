@@ -6,10 +6,11 @@
 #include "worldmanager.h"
 #include "config.h"
 
-class collision
+class Collision
 {
 public:
-    collision(WorldManager *bg, moveplayer *p, obstacles *ob, Config *config, bool extend);
+    Collision(WorldManager *bg, MovePlayer *p, Obstacles *ob, Config *config, bool extend);
+    ~Collision();
     //checks for collision
     bool iscolliding();
     //basic functions on collision: background and obstacles stop moving, player cannot go through the obstacle.
@@ -20,8 +21,8 @@ public:
     void difficultDestroy();
 
 private:
-    moveplayer *p;
-    obstacles *obs;
+    MovePlayer *p;
+    Obstacles *obs;
     WorldManager *bg;
     Config *config;
     bool extend;

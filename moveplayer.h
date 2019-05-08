@@ -3,11 +3,11 @@
 #include <player.h>
 #include <QDialog>
 //decorator pattern
-class moveplayer
+class MovePlayer
 {
 public:
-    moveplayer(Player *p);
-    ~moveplayer();
+    MovePlayer(Player *p);
+    ~MovePlayer();
 
     // draws the player
     void render(QPainter& painter);

@@ -30,13 +30,13 @@ Dialog::Dialog(QWidget *parent): QDialog(parent), ui(new Ui::Dialog){
         this->stage2 = this->config->getstage2();
         player = new Player(config);
         worldManager = new WorldManager(config);
+        // checks if the config file was valid for stage2. if it isn't valid for stage 2 but is valid for stage 1, stage 1 is implemented and vice versa. Stage1 check is done before
         if(stage2 == true){
-        this->playerfunc = new moveplayer(player);
-        this->ob = new obstacles(config, playerfunc, worldManager);
+        this->playerfunc = new MovePlayer(player);
+        this->ob = new Obstacles(config);
         bool extend = true;
-        this->collide = new collision(worldManager, playerfunc, ob, config, extend);
+        this->collide = new Collision(worldManager, playerfunc, ob, config, extend);
         }
-        //this->ob = nullptr;
     }
 
 }
@@ -60,11 +60,13 @@ Dialog::~Dialog(){
 
 // Frame update
 void Dialog::nextFrame(){
+    //update positions on collision
     if(stage2 == true){
         this->collide->onCollision();
     }
     update();
 }
+//reder the world, also checks if stage 2 is implemented
 void Dialog::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     worldManager->update(painter);

@@ -1,7 +1,7 @@
 #include "moveplayer.h"
 #include <iostream>
-
-moveplayer::moveplayer(Player *p)
+// constructor
+MovePlayer::MovePlayer(Player *p)
 {
     this->p = p;
     this->yspeed = 0;
@@ -11,14 +11,17 @@ moveplayer::moveplayer(Player *p)
     this->speed_vector = 1;
 }
 
-moveplayer::~moveplayer()
+//destructor
+MovePlayer::~MovePlayer()
 {
     delete this->p;
 }
 
-void moveplayer::setyvelocity(int val){    this->yspeed = val;}
+//set player velocity
+void MovePlayer::setyvelocity(int val){    this->yspeed = val;}
 
-void moveplayer::render(QPainter &painter)
+//draw player with jump function
+void MovePlayer::render(QPainter &painter)
 {
     this->setyvelocity(this->yspeed+this->gravity);
     update_vector();
@@ -26,7 +29,8 @@ void moveplayer::render(QPainter &painter)
     p->render(painter);
 }
 
-void moveplayer::updateypos(int val)
+//update yposition based on velocity and gravity and limit it (to screensize or obstacle on collision)
+void MovePlayer::updateypos(int val)
 {
     if(this->p->pos->getoriginalY() + val > bottom_limit - p->pos->getHeight()){
         p->pos->setY(bottom_limit-p->pos->getHeight());
@@ -39,11 +43,14 @@ void moveplayer::updateypos(int val)
     }
 }
 
-void moveplayer::setbottom_limit(int val){this->bottom_limit = val;}
+//setter method
+void MovePlayer::setbottom_limit(int val){this->bottom_limit = val;}
 
-void moveplayer::settop_limit(int val){this->top_limit = val;}
+//setter method
+void MovePlayer::settop_limit(int val){this->top_limit = val;}
 
-void moveplayer::update_vector()
+//checks if player is moving upwards or downwards, useful for determining collision and setting limits if player hits obstacle.
+void MovePlayer::update_vector()
 {
     if(this->yspeed>0)
         this->speed_vector = 1;
@@ -52,6 +59,6 @@ void moveplayer::update_vector()
     else
         this->speed_vector = 0;
 }
-
-int moveplayer::get_vector(){return this->speed_vector;}
+//getter method
+int MovePlayer::get_vector(){return this->speed_vector;}
 

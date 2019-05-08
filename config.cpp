@@ -94,43 +94,41 @@ bool Config::loadFile(std::string filename){
         this->stage2 = true;
     }
     else this->stage2 = false;
+
+    //if stage 2 is true, check for other values
     if(stage2 == true){
-    if(json.contains("red"))
-        red = json.value("red").toString().toStdString();
+        if(json.contains("red"))
+            red = json.value("red").toString().toStdString();
 
+        if(json.contains("blue"))
+            blue = json.value("blue").toString().toStdString();
 
-    if(json.contains("blue"))
-        blue = json.value("blue").toString().toStdString();
+        if(json.contains("green"))
+            green = json.value("green").toString().toStdString();
+        if(json.contains("spacing"))
+            obstacleSpacing = json.value("spacing").toInt();
 
-    if(json.contains("green"))
-        green = json.value("green").toString().toStdString();
+        if(json.contains("ypositions")){
+            QJsonArray values = json.value("ypositions").toArray();
+            for(int i = 0; i < values.count(); i++)
+                obstacleYpos.push_back(values.at(i).toInt());
+            }
 
-
-    if(json.contains("spacing"))
-        obstacleSpacing = json.value("spacing").toInt();
-
-
-    if(json.contains("ypositions")){
-        QJsonArray values = json.value("ypositions").toArray();
-        for(int i = 0; i < values.count(); i++)
-            obstacleYpos.push_back(values.at(i).toInt());
-    }
-
-
-    if(json.contains("obstacleSizes")){
-        QJsonArray values = json.value("obstacleSizes").toArray();
-        for(int i = 0; i < values.count(); i++)
-            obstacleSize.push_back(values.at(i).toInt());
-    }
-    //check obstacle files
-    if(!fileExists(blue)) return fileNotFoundError(blue);
-    if(!fileExists(red)) return fileNotFoundError(red);
-    if(!fileExists(green)) return fileNotFoundError(green);
-
-    if(obstacleSequence.size() != obstacleYpos.size())
-        return paramNotFoundError("Check the ypositions and sequences for obstacles");
-    if(obstacleSequence.size() != obstacleSize.size())
-        return paramNotFoundError("Check the number of obstacle sizes and sequences");
+        if(json.contains("obstacleSizes")){
+          QJsonArray values = json.value("obstacleSizes").toArray();
+          for(int i = 0; i < values.count(); i++)
+                obstacleSize.push_back(values.at(i).toInt());
+            }
+        //check obstacle files
+        if(!fileExists(blue)) return fileNotFoundError(blue);
+        if(!fileExists(red)) return fileNotFoundError(red);
+        if(!fileExists(green)) return fileNotFoundError(green);
+        //Assert that yposition for every obstacle in the sequence is given
+        if(obstacleSequence.size() != obstacleYpos.size())
+            return paramNotFoundError("Check the ypositions and sequences for obstacles");
+        //Assert that size for every obstacle in the sequence is given
+        if(obstacleSequence.size() != obstacleSize.size())
+            return paramNotFoundError("Check the number of obstacle sizes and sequences");
 
   }
     // Check textures exist

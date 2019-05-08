@@ -32,14 +32,14 @@ public:
     int getGroundPos();
 
     // obstacles
-    std::string getRed();
-    std::string getGreen();
-    std::string getBlue();
-    std::vector<std::string> getObstacleSequence();
-    int getObstacleSpacing();
-    std::vector<int> getObstacleYpos();
-    std::vector <int> getObstacleSize();
-    bool getstage2();
+    std::string getRed();   //red obstacle texture
+    std::string getGreen(); //blue obstacle texture
+    std::string getBlue();  // green obstacle texture
+    std::vector<std::string> getObstacleSequence();     //sequence of red, green and blue obstacles
+    int getObstacleSpacing();                           //spacing between the obstacles
+    std::vector<int> getObstacleYpos();                 //yposition of the obstacles
+    std::vector <int> getObstacleSize();                //size of the obstacles
+    bool getstage2();                                   //checks if stage2 is implemented
 private:
 
     // Attributes
