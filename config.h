@@ -38,7 +38,8 @@ public:
     std::vector<std::string> getObstacleSequence();
     int getObstacleSpacing();
     std::vector<int> getObstacleYpos();
-
+    std::vector <int> getObstacleSize();
+    bool getstage2();
 private:
 
     // Attributes
@@ -55,6 +56,7 @@ private:
     std::vector<std::string> groundCandyTextures;
     int groundPos;
     int airPos;
+
     //obstacles
     std::string red;
     std::string blue;
@@ -62,7 +64,8 @@ private:
     std::vector<std::string> obstacleSequence;
     int obstacleSpacing;
     std::vector <int> obstacleYpos;
-
+    std::vector <int> obstacleSize;
+    bool stage2;
     // Helper function
     bool fileExists(std::string path);
     bool fileNotFoundError(std::string file);

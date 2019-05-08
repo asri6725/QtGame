@@ -27,15 +27,16 @@ Dialog::Dialog(QWidget *parent): QDialog(parent), ui(new Ui::Dialog){
 
     // Init world manager and player
     else{
+        this->stage2 = this->config->getstage2();
         player = new Player(config);
         worldManager = new WorldManager(config);
+        if(stage2 == true){
         this->playerfunc = new moveplayer(player);
-        this->ob = new obstacles(config, playerfunc);
+        this->ob = new obstacles(config, playerfunc, worldManager);
+        bool extend = true;
+        this->collide = new collision(worldManager, playerfunc, ob, config, extend);
+        }
         //this->ob = nullptr;
-        if(this->ob == nullptr)
-            this->stage2 = false;
-        else
-            this->stage2 = true;
     }
 
 }
@@ -59,6 +60,9 @@ Dialog::~Dialog(){
 
 // Frame update
 void Dialog::nextFrame(){
+    if(stage2 == true){
+        this->collide->onCollision();
+    }
     update();
 }
 void Dialog::paintEvent(QPaintEvent *event){
@@ -69,8 +73,6 @@ void Dialog::paintEvent(QPaintEvent *event){
     else{
     playerfunc->render(painter);
     ob->render(painter);
-    worldManager->setvelocity(-(ob->getvelocity()));
-
     }
 }
 
@@ -82,8 +84,10 @@ void Dialog::keyPressEvent(QKeyEvent *e){
     // Quit
     if(e->key() == Qt::Key_Escape)
         this->reject();
-    //jump
+    //jump, first check if we are executing stage 2 code
     if(stage2 == true)
-    if(e->key()==Qt::Key_Space)
+    if(e->key()==Qt::Key_Space){
         this->playerfunc->setyvelocity(30);
+        //std::cout << "player jumped" << std::endl;
+    }
 }

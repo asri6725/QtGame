@@ -19,15 +19,29 @@
   "red":"D:/info3220 assignment2/Base1E/resources/textures/red.png",
   "blue":"D:/info3220 assignment2/Base1E/resources/textures/blue.png",
   "green":"D:/info3220 assignment2/Base1E/resources/textures/green.png",
-  "spacing": 100,
+  "spacing": 200,
   "obstacleSequence": [
 		"red",
 		"blue",
-		"green"
+		"green",
+		"green",
+		"blue",
+		"red"
 	],
 	"ypositions":[
 	50,
-	100,
-	200
+	300,
+	200,
+	400,
+	500,
+	600
+	],
+	"obstacleSizes":[
+	1,
+	2,
+	1,
+	3,
+	1,
+	2
 	]
 }

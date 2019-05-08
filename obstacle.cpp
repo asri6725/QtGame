@@ -2,19 +2,24 @@
 #include <QRect>
 #include <iostream>
 
-obstacle::obstacle(Position *pos, QPixmap *sprite){ this->pos = pos; this->sprite = sprite; std::cout << "obstacle constructor" << std::endl;}
+obstacle::obstacle(Position *pos, QPixmap *sprite, QString type){ this->pos = pos; this->sprite = sprite; this->type = type;}
 
-obstacle::obstacle(int x, int y, int w, int h, QPixmap *sprite)
+obstacle::obstacle(int x, int y, int w, int h, QPixmap *sprite, QString type)
 {
     this->pos = new Position(x, y, w,h);
     this->sprite = sprite;
+    this->type = type;
 }
 
 obstacle::~obstacle()
 {
     delete sprite;
     delete pos;
-    delete this;
+}
+
+QString obstacle::obsType()
+{
+    return this->type;
 }
 
 void obstacle::render(QPainter &painter)

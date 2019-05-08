@@ -9,6 +9,7 @@
 #include "worldmanager.h"
 #include "moveplayer.h"
 #include "obstacles.h"
+#include "collision.h"
 
 namespace Ui {
     class Dialog;
@@ -40,6 +41,7 @@ private:
     moveplayer* playerfunc;
     obstacles *ob;
     bool stage2;
+    collision *collide;
 public slots:
 
     // Process next frame

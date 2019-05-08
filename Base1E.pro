@@ -36,7 +36,8 @@ SOURCES += \
     worldmanager.cpp \
     moveplayer.cpp \
     obstacles.cpp \
-    obstacle.cpp
+    obstacle.cpp \
+    collision.cpp
 
 HEADERS += \
         dialog.h \
@@ -51,7 +52,8 @@ HEADERS += \
     define.h \
     moveplayer.h \
     obstacles.h \
-    obstacle.h
+    obstacle.h \
+    collision.h
 
 FORMS += \
         dialog.ui

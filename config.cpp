@@ -87,38 +87,52 @@ bool Config::loadFile(std::string filename){
 
     //Read about obstacles
 
-    if(json.contains("red"))
-        red = json.value("red").toString().toStdString();
-    else return paramNotFoundError("red texture - obstacle");
-
-
-    if(json.contains("blue"))
-        blue = json.value("blue").toString().toStdString();
-    else return paramNotFoundError("blue texture - obstacle");
-
-    if(json.contains("green"))
-        green = json.value("green").toString().toStdString();
-    else return paramNotFoundError("green texture - obstacle");
-
     if(json.contains("obstacleSequence")){
         QJsonArray values = json.value("obstacleSequence").toArray();
         for(int i = 0; i < values.count(); i++)
             obstacleSequence.push_back(values.at(i).toString().toStdString());
+        this->stage2 = true;
     }
-    else return paramNotFoundError("obstacleSequence");
+    else this->stage2 = false;
+    if(stage2 == true){
+    if(json.contains("red"))
+        red = json.value("red").toString().toStdString();
+
+
+    if(json.contains("blue"))
+        blue = json.value("blue").toString().toStdString();
+
+    if(json.contains("green"))
+        green = json.value("green").toString().toStdString();
+
 
     if(json.contains("spacing"))
         obstacleSpacing = json.value("spacing").toInt();
-    else return paramNotFoundError("spacing");
 
-/*
+
     if(json.contains("ypositions")){
         QJsonArray values = json.value("ypositions").toArray();
         for(int i = 0; i < values.count(); i++)
             obstacleYpos.push_back(values.at(i).toInt());
     }
-    else return paramNotFoundError("obstacles Y positions");
-*/
+
+
+    if(json.contains("obstacleSizes")){
+        QJsonArray values = json.value("obstacleSizes").toArray();
+        for(int i = 0; i < values.count(); i++)
+            obstacleSize.push_back(values.at(i).toInt());
+    }
+    //check obstacle files
+    if(!fileExists(blue)) return fileNotFoundError(blue);
+    if(!fileExists(red)) return fileNotFoundError(red);
+    if(!fileExists(green)) return fileNotFoundError(green);
+
+    if(obstacleSequence.size() != obstacleYpos.size())
+        return paramNotFoundError("Check the ypositions and sequences for obstacles");
+    if(obstacleSequence.size() != obstacleSize.size())
+        return paramNotFoundError("Check the number of obstacle sizes and sequences");
+
+  }
     // Check textures exist
     if(!fileExists(backgroundTexture)) return fileNotFoundError(backgroundTexture);
     if(!fileExists(playerTexture)) return fileNotFoundError(playerTexture);
@@ -128,16 +142,7 @@ bool Config::loadFile(std::string filename){
     for(unsigned int i = 0; i < groundCandyTextures.size(); i++)
         if(!fileExists(groundCandyTextures[i])) return fileNotFoundError(groundCandyTextures[i]);
 
-    // obstacle files
-    if(!fileExists(blue)) return fileNotFoundError(blue);
-    if(!fileExists(red)) return fileNotFoundError(red);
-    if(!fileExists(green)) return fileNotFoundError(green);
-/*    for(unsigned int i = 0; i < obstacleSequence.size(); i++)
-        if(!fileExists(obstacleSequence[i])) return fileNotFoundError(obstacleSequence[i]);
 
-    if(obstacleSequence.size() != obstacleYpos.size())
-        return paramNotFoundError("Check the ypositions and sequences for obstacles");
-*/
     // Everything successfully parsed so set valid
     valid = true;
     return valid;
@@ -180,3 +185,7 @@ std::vector<std::string> Config::getObstacleSequence(){return obstacleSequence;}
 int Config::getObstacleSpacing(){return obstacleSpacing;}
 
 std::vector<int> Config::getObstacleYpos(){return obstacleYpos;}
+
+std::vector<int> Config::getObstacleSize(){return obstacleSize;}
+
+bool Config::getstage2(){ return this->stage2;}
