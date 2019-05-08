@@ -1,5 +1,5 @@
 #include "moveplayer.h"
-#include <iostream>
+
 // constructor
 MovePlayer::MovePlayer(Player *p)
 {

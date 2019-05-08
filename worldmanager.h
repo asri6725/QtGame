@@ -19,7 +19,7 @@ public:
     // Toggle between paused and unpaused
     void togglePause();
 
-    //get velocity
+    //accessor methods for velocity(I added this to change background velocity on collision)
     int getvelocity();
     void setvelocity(int velocity);
 private:

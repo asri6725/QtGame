@@ -19,7 +19,7 @@
   "red":"D:/info3220 assignment2/Base1E/resources/textures/red.png",
   "blue":"D:/info3220 assignment2/Base1E/resources/textures/blue.png",
   "green":"D:/info3220 assignment2/Base1E/resources/textures/green.png",
-  "spacing": 200,
+  "spacing": 300,
   "obstacleSequence": [
 		"red",
 		"blue",

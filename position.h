@@ -15,6 +15,7 @@ public:
     int getY();
     int getWidth();
     int getHeight();
+    //i added this method
     int getoriginalY();
 
     // Change pos

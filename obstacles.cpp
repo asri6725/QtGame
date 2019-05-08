@@ -1,8 +1,9 @@
 #include "obstacles.h"
-#include <iostream>
 
+//constructor
 Obstacles::Obstacles(Config *config)
 {
+    //read from config and store directly in class objects.For vectors, store them in temporary variables so I can use them easier
     this->config = config;
     this->speed = config->getVelocity();
     this->spacing = config->getObstacleSpacing();
@@ -20,10 +21,9 @@ Obstacles::Obstacles(Config *config)
         else
             sprite = new QPixmap(config->getGreen().c_str());
         if(i==0)
-            obstacless.push_back(new Obstacle(RES_X, obsY[i], 70*size[i], 50*size[i], sprite, type));
-        else{
-            obstacless.push_back(new Obstacle(obstacless[i-1]->pos->getX()+obstacless[i-1]->pos->getWidth()+spacing, obsY[i], 70*size[i], 50*size[i], sprite, type));
-        }
+            obstacless.push_back(new Obstacle(RES_X, obsY[i], 70*size[i], 50*size[i], sprite, type));       //create the first object at the end of the screen
+        else
+            obstacless.push_back(new Obstacle(obstacless[i-1]->pos->getX()+obstacless[i-1]->pos->getWidth()+spacing, obsY[i], 70*size[i], 50*size[i], sprite, type)); //create all other objects with a space before their previos object
     }
 }
 
@@ -47,6 +47,7 @@ void Obstacles::render(QPainter &painter)
     }
 }
 
+// destroy obstacles- push the obstacle back at the end of the sequence
 void Obstacles::destroyObs(Obstacle* ob)
 {
     Obstacle* temp = ob;
@@ -55,6 +56,8 @@ void Obstacles::destroyObs(Obstacle* ob)
     obstacless.erase(obstacless.begin());
     obstacless.push_back(temp);
 }
+
+//destroy obstacles if they are no longer on screen
 void Obstacles::updateObs()
 {
     if(obstacless[0]->pos->getX()+obstacless[0]->pos->getWidth() < 0){
@@ -62,7 +65,7 @@ void Obstacles::updateObs()
     }
 }
 
-
+//getter and setter methods
 void Obstacles::setvelocity(int velval) {this->speed = velval;}
 
 int Obstacles::getvelocity(){return this->speed;}

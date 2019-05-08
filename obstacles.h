@@ -2,7 +2,6 @@
 #define OBSTACLES_H
 #include "obstacle.h"
 #include "moveplayer.h"
-#include "worldobject.h"
 #include "config.h"
 #include <QPainter>
 

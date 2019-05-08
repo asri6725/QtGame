@@ -5,7 +5,6 @@
 #include <QJsonArray>
 #include <QFileInfo>
 #include "config.h"
-#include <iostream>
 
 // Constructors + Destructors
 Config::Config(){}
@@ -95,7 +94,7 @@ bool Config::loadFile(std::string filename){
     }
     else this->stage2 = false;
 
-    //if stage 2 is true, check for other values
+    //if stage 2 is true, check for other values; i added this part
     if(stage2 == true){
         if(json.contains("red"))
             red = json.value("red").toString().toStdString();
@@ -130,7 +129,7 @@ bool Config::loadFile(std::string filename){
         if(obstacleSequence.size() != obstacleSize.size())
             return paramNotFoundError("Check the number of obstacle sizes and sequences");
 
-  }
+} //part i added ends
     // Check textures exist
     if(!fileExists(backgroundTexture)) return fileNotFoundError(backgroundTexture);
     if(!fileExists(playerTexture)) return fileNotFoundError(playerTexture);
