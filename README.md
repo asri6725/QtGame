@@ -1,3 +1,6 @@
+# Brief #  
+This project uses the QT framework to create a small game. The code implemented in the project follows set [design patterns](https://www.google.com/search?q=design+patterns+java&oq=design+patterns&aqs=chrome.1.69i57j0l2j46j0l4.5551j0j7&sourceid=chrome&ie=UTF-8) which are discussed below.
+
 # Stickman
 * **Extensions:** the extensions present in this implementation
 * **Structure:** the overarching structure of the code base
